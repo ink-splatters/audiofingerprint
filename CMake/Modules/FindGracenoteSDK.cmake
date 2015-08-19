@@ -15,18 +15,23 @@ find_path(GRACENOTESDK_INCLUDE_DIR NAMES gnsdk.h
 message (${GRACENOTESDK_INCLUDE_DIR})
 
 if (APPLE)
-  set (LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/mac_x86-64)
+  set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/mac_x86-64)
+  set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/mac_x86-64)
 elseif (UNIX)
   if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-    set (LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/linux_x86-64)
+    set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/linux_x86-64)
+    set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/linux_x86)
   else()
-    set (LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/linux_x86-32)
+    set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/linux_x86-32)
+    set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/linux_x86-32)
   endif()
 elseif (WIN32)
   if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-    set (LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/win_x86-64)
+    set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/win_x86-64)
+    set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/win_x86-64)
   else()
-    set (LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/win_x86-32)
+    set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/win_x86-32)
+    set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/win_x86-32)
   endif()
 else()
   message (FATAL_ERROR "platform is not supported")
@@ -39,9 +44,24 @@ find_library(
     GRACENOTESDK_LIBRARY
     NAMES 
       gnsdk_manager.${GRACENOTESDK_VER}
+  PATHS
+    /usr/local
+    /usr/X11
+    /usr
+    ${GRACENOTESDK_LIB_DIR}
+  HINTS
+    ${GRACENOTESDK_LIB_DIR}
+  PATH_SUFFIXES
+    lib
+    lib64
+)
+
+set (GRACENOTESDK_LIBRARIES 
+      gnsdk_manager.${GRACENOTESDK_VER}
       gnsdk_link.${GRACENOTESDK_VER}
       gnsdk_lookup_local.${GRACENOTESDK_VER}
-      gnsdk_dsp_lookup_localstream.${GRACENOTESDK_VER}
+      gnsdk_lookup_localstream.${GRACENOTESDK_VER}
+      gnsdk_dsp.${GRACENOTESDK_VER}
       gnsdk_manager.${GRACENOTESDK_VER}
       gnsdk_moodgrid.${GRACENOTESDK_VER}
       gnsdk_musicid.${GRACENOTESDK_VER}
@@ -50,16 +70,6 @@ find_library(
       gnsdk_playlist.${GRACENOTESDK_VER}
       gnsdk_storage_sqlite.${GRACENOTESDK_VER}
       gnsdk_video.${GRACENOTESDK_VER}
-  PATHS
-    /usr/local
-    /usr/X11
-    /usr
-    ${LIB_DIR}
-  HINTS
-    ${LIB_DIR}
-  PATH_SUFFIXES
-    lib
-    lib64
 )
 
 include(FindPackageHandleStandardArgs)

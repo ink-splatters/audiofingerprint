@@ -1,5 +1,7 @@
 #pragma once
 
+#define GNSDK_STORAGE_SQLITE 1
+
 #include "gnsdk.hpp"
 
 namespace AudioFingerprint

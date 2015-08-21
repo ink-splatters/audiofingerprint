@@ -2,7 +2,6 @@
 
 #include "UserStore.h"
 
-#undef GNSDK_TASTE
 #include "gnsdk.hpp"
 
 #include <memory>

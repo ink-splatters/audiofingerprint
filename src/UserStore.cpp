@@ -2,7 +2,8 @@
 
 #include <fstream>
 
-using namespace AudioFingerPrint;
+namespace AudioFingerprint
+{
 
 GnString UserStore::LoadSerializedUser(gnsdk_cstr_t clientId)
 {
@@ -38,4 +39,6 @@ bool UserStore::StoreSerializedUser(gnsdk_cstr_t clientId, gnsdk_cstr_t userData
     return true;
   }
   return false;
+}
+
 }

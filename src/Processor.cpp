@@ -1,15 +1,23 @@
 #include "Processor.h"
+#include "AudioSource.h"
+#include "StatusEventsHandler.h"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-
 #include <fstream>
 
-using namespace AudioFingerPrint;
+namespace
+{
+const std::string APP_VERSION="1.0";
+}
+
+namespace AudioFingerprint
+{
 
 Processor::Processor(const std::string& settings)
 {
   using boost::property_tree::ptree;
+
 
   ptree pt ;
   std::ifstream file(settings);
@@ -24,6 +32,8 @@ Processor::Processor(const std::string& settings)
 
   std::cout << std::endl << "GNSDK Product Version : " << _manager->ProductVersion() << " \t(built " << _manager->BuildDate() << ")" << std::endl;
 
+  std::cout << "Initializing..." << std::endl;
+
   _log = std::unique_ptr<GnLog>(new GnLog(
     "AudioFingerPrint.log",
     GnLogFilters().Error().Warning(),
@@ -33,19 +43,31 @@ Processor::Processor(const std::string& settings)
     )
   );
   
-  _log->Enable(kLogPackageAllGNSDK);      /* Enable for all GNSDK packages */ 
-
-  GnStorageSqlite::Enable();
+  _log->Enable(kLogPackageAllGNSDK);
 
   _userStore = std::unique_ptr<UserStore>(new UserStore());
-  _user = std::unique_ptr<GnUser>(new GnUser(userStore, clientId, clientIdTag, applicationVersion));
+  _user = std::unique_ptr<GnUser>(new GnUser(*(_userStore.get()), clientID.c_str(), clientTag.c_str(), APP_VERSION.c_str()));
   _user->Options().LookupMode(kLookupModeOnline);
 
   _locale = std::unique_ptr<GnLocale>(new GnLocale ( kLocaleGroupMusic, kLanguageEnglish, kRegionDefault, kDescriptorSimplified, *(_user.get())));
   _locale->SetGroupDefault();
+
+  gracenote::storage_sqlite::GnStorageSqlite::Enable();
+
+  std::cout << "Done." << std::endl;
 }
 
 void Processor::process(const std::string &input, const std::string &output)
 {
+  StatusEventsHandler eventsHandler(output);
+  AudioSource         audioSource(input);
+  GnMusicIdStream     stream(*(_user.get()), kPresetRadio, &eventsHandler);
+
+  stream.Options().ResultSingle(true);
+  stream.AudioProcessStart(audioSource);
+  stream.IdentifyAlbum();
+}
+
+}
 
 }

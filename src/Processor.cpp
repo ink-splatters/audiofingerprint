@@ -25,4 +25,9 @@ Processor::Processor(const std::string& settings)
   _manager = std::unique_ptr<GnManager>(new GnManager(licenseFile.c_str(), kLicenseInputModeFilename));
 }
 
+void Processor::process(const std::string &input, const std::string &output)
+{
+
+}
+
 }

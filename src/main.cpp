@@ -1,5 +1,7 @@
 #include "Processor.h"
 
+#include "gnsdk.hpp"
+
 #include <iostream>
 #include <boost/program_options.hpp>
 
@@ -15,28 +17,40 @@ int main (int argc, char* argv[])
 
     desc.add_options()
       ("help,h", "Show help")
-      ("settings,s", po::value<std::string>(&settings), "Settings file name")
-      ("input,i", po::value<std::string>(&input), "Fingerprint File")
-      ("output,o", po::value<std::string>(&output), "Output JSON file name")
+      ("settings", po::value<std::string>(&settings)->required(), "Settings file name")
+      ("input", po::value<std::string>(&input)->required(), "Fingerprint File")
+      ("output", po::value<std::string>(&output)->required(), "Output JSON file name")
     ;
 
-    // AudioFingerprint::Processor processor (settings);
-    
-    // processor.process(input, output);  
-
     po::variables_map vm;
-    const auto & parsed = po::command_line_parser(argc, argv).options(desc).allow_unregistered().run();
-    po::store(parsed, vm) ;
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+
+    if (vm.count("help") || argc == 1)
+    {
+      std::cout << desc << std::endl;
+      return 0;
+    }
+
     po::notify(vm);
-    std::cout << "test" << std::endl;
+
+    AudioFingerprint::Processor processor (settings);
+    
+    processor.process(input, output);      
+  }
+  catch (gracenote::GnError& e)
+  {
+    std::cout << "ERROR: " << e.ErrorAPI() << "\t" << std::hex << e.ErrorCode() << "\t" <<  e.ErrorDescription() << std::endl;
+    return 1;
   }
   catch (const std::exception & e)
   {
     std::cerr << e.what() << std::endl;
+    return 1;
   }
   catch (...)
   {
     std::cerr << "Unknown exception!" << std::endl;   
+    return 1;
   }
   
 

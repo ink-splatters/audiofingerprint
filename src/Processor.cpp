@@ -23,6 +23,8 @@ Processor::Processor(const std::string& settings)
   const auto & licenseFile = pt.get<std::string>("LicenseFile");
 
   _manager = std::unique_ptr<GnManager>(new GnManager(licenseFile.c_str(), kLicenseInputModeFilename));
+
+  std::cout << std::endl << "GNSDK Product Version : " << _manager->ProductVersion() << " \t(built " << _manager->BuildDate() << ")" << std::endl;
 }
 
 void Processor::process(const std::string &input, const std::string &output)

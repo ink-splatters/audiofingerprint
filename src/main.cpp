@@ -20,9 +20,15 @@ int main (int argc, char* argv[])
       ("output,o", po::value<std::string>(&output), "Output JSON file name")
     ;
 
-    AudioFingerprint::Processor processor (settings);
+    // AudioFingerprint::Processor processor (settings);
     
-    processor.process(input, output);  
+    // processor.process(input, output);  
+
+    po::variables_map vm;
+    const auto & parsed = po::command_line_parser(argc, argv).options(desc).allow_unregistered().run();
+    po::store(parsed, vm) ;
+    po::notify(vm);
+    std::cout << "test" << std::endl;
   }
   catch (const std::exception & e)
   {

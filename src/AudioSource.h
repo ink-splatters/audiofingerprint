@@ -1,7 +1,15 @@
 #pragma once
 
+#include "gnsdk.hpp"
+
+#include <fstream>
+#include <string>
+
 namespace AudioFingerprint
 {
+
+using namespace gracenote;
+using namespace gracenote::musicid;
 
 class AudioSource : public IGnAudioSource
 {

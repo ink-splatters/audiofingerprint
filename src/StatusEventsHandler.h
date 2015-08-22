@@ -7,6 +7,10 @@
 namespace AudioFingerprint
 {
 
+using namespace gracenote;
+using namespace gracenote::metadata;
+using namespace gracenote::musicid_stream;
+
 class StatusEventHandler : public IGnMusicIdStreamEvents
 {
   std::string _outputFile;

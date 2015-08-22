@@ -1,5 +1,7 @@
 #include "AudioSource.h"
 
+#include <iostream>
+
 namespace AudioFingerprint
 {
 
@@ -47,7 +49,7 @@ gnsdk_uint32_t AudioSource::SourceInit()
 
     std::cout << "Reading WAV file header..." << std::endl;
 
-    _wavFile.read(&header, sizeof(header));
+    _wavFile.read(reinterpret_cast<char*>(&header), sizeof(header));
     _sampleRate = header.SamplesPerSec;
     _bitsPerSample = header.bitsPerSample;
     _channels = header.NumOfChan;
@@ -62,28 +64,28 @@ gnsdk_uint32_t AudioSource::SourceInit()
 
 void AudioSource::SourceClose()
 {
-    _wavFile.close();
+  _wavFile.close();
 }
 
 gnsdk_uint32_t AudioSource::SamplesPerSecond()
 {
-    return _sampleRate;
+  return _sampleRate;
 }
 
 gnsdk_uint32_t AudioSource::SampleSizeInBits()
 {
-    return _bitsPerSample;
+  return _bitsPerSample;
 }
 
 gnsdk_uint32_t AudioSource::NumberOfChannels()
 {
-    return _channels;
+  return _channels;
 }
 
 gnsdk_size_t AudioSource::GetData(gnsdk_byte_t* dataBuffer, gnsdk_size_t dataSize)
 {
-    _wavFile.read((gnsdk_char_t*)dataBuffer, dataSize);
-    return _wavFile.gcount();
+  _wavFile.read((gnsdk_char_t*)dataBuffer, dataSize);
+  return _wavFile.gcount();
 }
 
 }

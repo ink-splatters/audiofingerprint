@@ -1,11 +1,34 @@
-App Name:
-AudioFingerprint
-Client ID for Web API, Rhythm API and eyeQ
-1736583587-DC207DBC7AE7540FB17A7272D7838975
-License information for GNSDK and Entourage
-Client ID: 1736583587
-Client Tag: DC207DBC7AE7540FB17A7272D7838975
+AudioFinterprint v1.0
 
-License:
 
--- BEGIN LICENSE v1.0 741815C0 --\r\nname: \r\nnotes: Gracenote Open Developer Program\r\nstart_date: 0000-00-00\r\nclient_id: 1736583587\r\nmusicid_file: enabled\r\nmusicid_text: enabled\r\nmusicid_stream: enabled\r\nmusicid_cd: enabled\r\nplaylist: enabled\r\nvideoid: enabled\r\nvideo_explore: enabled\r\nlocal_images: enabled\r\nlocal_mood: enabled\r\nvideoid_explore: enabled\r\nacr: enabled\r\nepg: enabled\r\n-- SIGNATURE 741815C0 --\r\nlAADAgAfAUh6Wu2PNcqjSC6W925HIV8Vtlrmp949NG95JwB16gAfAVxX+l8xtKcxhUeUp9L4MB2/erXTxNmYIxP8zpUnMQ==\r\n-- END LICENSE 741815C0 --\r\n
+PREREQUISITES
+  -gcc/clang (Xcode on Mac, devtools or analog on Linux)
+  -cmake
+  -boost 1.55+
+  -gracenotesdk (GNSDK)
+
+  for installing prerequisites on Mac please use brew
+  for installing prerequisites on Linux please use your packet manager
+
+BUILDING
+
+1. Install GracenoteSDK. Note, you should get your App ID and license file from Gracenote.
+   Please see settings_af.json for an example
+2. set GRACENOTESDK_ROOT ENV variable
+3. install cmake
+4. install boost development package (on mac os x just 'brew install boost')
+5. run ./build.sh 
+6. The program will build and will run with sample data (user id, user tag, license and input file Smells Like a Teen Spirit)
+7. Please run ./build/install/AudioFingerPrint --help for options
+
+8. To deploy the app outside of build machine please use install folder and ensure you have boost same version installed on your system
+
+
+NOTES
+
+The software autodetects WAV format (channels, frequency, bps)
+
+FILE FORMATS
+
+1. Please see settings_af.json to see input settings format
+2. Please see build/install/output.json for output format 

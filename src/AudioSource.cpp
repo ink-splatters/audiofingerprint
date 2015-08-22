@@ -1,6 +1,7 @@
 #include "AudioSource.h"
 
 #include <iostream>
+// #include <endian.h>
 
 namespace AudioFingerprint
 {
@@ -8,22 +9,32 @@ namespace AudioFingerprint
 namespace
 {
 
-typedef struct  WAV_HEADER{
-    char                RIFF[4];        // RIFF Header      Magic header
-    unsigned long       ChunkSize;      // RIFF Chunk Size  
-    char                WAVE[4];        // WAVE Header      
-    char                fmt[4];         // FMT header       
-    unsigned long       Subchunk1Size;  // Size of the fmt chunk                                
-    unsigned short      AudioFormat;    // Audio format 1=PCM,6=mulaw,7=alaw, 257=IBM Mu-Law, 258=IBM A-Law, 259=ADPCM 
-    unsigned short      NumOfChan;      // Number of channels 1=Mono 2=Sterio                   
-    unsigned long       SamplesPerSec;  // Sampling Frequency in Hz                             
-    unsigned long       bytesPerSec;    // bytes per second 
-    unsigned short      blockAlign;     // 2=16-bit mono, 4=16-bit stereo 
-    unsigned short      bitsPerSample;  // Number of bits per sample      
-    char                Subchunk2ID[4]; // "data"  string   
-    unsigned long       Subchunk2Size;  // Sampled data length    
+#define SWAPPED_US(x) (((x) >> 8) | ((x) << 8))
+#define SWAPPED_UL(x) ((((x) >> 24) & 0xff) | (((x) << 8) & 0xff0000) | (((x) >> 8) & 0xff00) | (((x) << 24) & 0xff000000))
 
-}WAVHeader; 
+#pragma pack(push, 1)
+
+typedef struct {
+    char RIFF [4];
+    uint32_t Size;
+    char Format [4];
+    char SubID_1 [4];
+    uint32_t Subchunk1Size;
+    uint16_t AudioFormat;
+    uint16_t NumOfChan;
+    uint32_t SamplesPerSec;
+    uint32_t bytesPerSec;
+    uint16_t blockAlign;
+    uint16_t bitsPerSample;
+    char SubID_2 [4];
+    uint32_t SubSize_2;
+} WAVHeader;
+
+#pragma pack(pop)
+
+const char * RIFF = "RIFF";
+const char * WAVE = "WAVE";
+const char * fmt = "fmt";
 
 }
 
@@ -45,14 +56,14 @@ gnsdk_uint32_t AudioSource::SourceInit()
   }
   else
   {
-    WAVHeader header;
-
-    std::cout << "Reading WAV file header..." << std::endl;
+    WAVHeader header = {};
 
     _wavFile.read(reinterpret_cast<char*>(&header), sizeof(header));
+
     _sampleRate = header.SamplesPerSec;
     _bitsPerSample = header.bitsPerSample;
     _channels = header.NumOfChan;
+    
 
     std::cout << "Sample Rate: " << _sampleRate << std::endl;
     std::cout << "Bits per sample: " << _bitsPerSample << std::endl;

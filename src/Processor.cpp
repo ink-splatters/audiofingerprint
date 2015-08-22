@@ -17,6 +17,7 @@ namespace AudioFingerprint
 Processor::Processor(const std::string& settings)
 {
   using boost::property_tree::ptree;
+  using namespace gracenote::storage_sqlite;
 
 
   ptree pt ;
@@ -45,6 +46,8 @@ Processor::Processor(const std::string& settings)
   
   _log->Enable(kLogPackageAllGNSDK);
 
+  GnStorageSqlite::Enable();
+
   _userStore = std::unique_ptr<UserStore>(new UserStore());
   _user = std::unique_ptr<GnUser>(new GnUser(*(_userStore.get()), clientID.c_str(), clientTag.c_str(), APP_VERSION.c_str()));
   _user->Options().LookupMode(kLookupModeOnline);
@@ -52,7 +55,6 @@ Processor::Processor(const std::string& settings)
   _locale = std::unique_ptr<GnLocale>(new GnLocale ( kLocaleGroupMusic, kLanguageEnglish, kRegionDefault, kDescriptorSimplified, *(_user.get())));
   _locale->SetGroupDefault();
 
-  gracenote::storage_sqlite::GnStorageSqlite::Enable();
 
   std::cout << "Done." << std::endl;
 }
@@ -63,7 +65,7 @@ void Processor::process(const std::string &input, const std::string &output)
   AudioSource         audioSource(input);
   GnMusicIdStream     stream(*(_user.get()), kPresetRadio, &eventsHandler);
 
-  stream.Options().ResultSingle(true);
+  // stream.Options().ResultSingle(true);
   stream.AudioProcessStart(audioSource);
   stream.IdentifyAlbum();
 }

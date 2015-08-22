@@ -15,9 +15,17 @@ find_package(GracenoteSDK 3.07.7 REQUIRED)
 
 set (GRACENOTESDK_CPP_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/wrappers/gnsdk_cplusplus/src_wrapper)
 
-add_definitions(-DGNSDK_STORAGE_SQLITE=1)
 add_definitions(-DGNSDK_MUSICID=1)
 add_definitions(-DGNSDK_MUSICID_STREAM=1)
+add_definitions(-DGNSDK_LOOKUP_LOCAL=1)
+add_definitions(-DGNSDK_LOOKUP_LOCALSTREAM=1)
+add_definitions(-DGNSDK_STORAGE_SQLITE=1)
+add_definitions(-DGNSDK_DSP=1)
+add_definitions(-DGNSDK_MANAGER=1)
+add_definitions(-D_REENTRANT=1)
+add_definitions(-D_THREAD_SAFE=1)
+add_definitions(-DGCSL_STRICT_HANDLES=1)
+add_definitions(-DGNSDK_STRICT_HANDLES=1)
 
 file (GLOB SRC ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file (GLOB WRAPPER_SRC ${GRACENOTESDK_CPP_INCLUDE_DIR}/*.cpp)

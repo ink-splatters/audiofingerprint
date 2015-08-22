@@ -12,7 +12,7 @@ using boost::property_tree::ptree;
 namespace
 {
 
-ptree GetTrack(const std::string &artist, const GnTrack & track )
+ptree GetTrack(const std::string &artist, const std::string & album, const GnTrack & track )
 {
   std::cout << "\t\tMatched track:" << std::endl;
   std::cout << "\t\t\tnumber: " << track.TrackNumber() << std::endl;
@@ -21,8 +21,8 @@ ptree GetTrack(const std::string &artist, const GnTrack & track )
   std::cout << "\t\t\ttrack length (ms): " << track.Duration() << std::endl;
 
   ptree ptTrack;
-  ptTrack.put<std::string>("artist", track.Artist().Name().Display());
-  ptTrack.put<std::string>("album", track.Title().Display());
+  ptTrack.put<std::string>("artist", artist);
+  ptTrack.put<std::string>("album", album);
   ptTrack.put<std::string>("title", track.Title().Display());
   ptTrack.put<uint32_t>("length_ms", track.Duration());
 
@@ -38,8 +38,8 @@ void OutputResult(const std::string &outputFile, const GnResponseAlbums& albums)
     
   for (auto it = albums.Albums().begin(); it != albums.Albums().end(); ++it)
   {
-    std::cout << "\tMatch " << ++matchCounter << " - Album Title:\t" << std::endl;
-    auto track = GetTrack(it->Artist().Name().Display(), it->TrackMatched());
+    std::cout << "\tMatch " << ++matchCounter << " - Album Title:\t" << it->Title().Display() << std::endl;
+    auto track = GetTrack(it->Artist().Name().Display(), it->Title().Display(), it->TrackMatched());
     tracks.push_back(std::make_pair(std::string(), track));
   }
 
@@ -68,17 +68,9 @@ void StatusEventHandler::StatusEvent(GnStatus status, gnsdk_uint32_t percent_com
         break;
         
     case gnsdk_status_connecting:
-        std::cout <<"Connecting... " << percent_complete << "%%" << std::endl;
+        std::cout <<"Connecting... " << std::endl;
         break;
-        
-    case gnsdk_status_sending:
-        std::cout <<"Sending... " << percent_complete << "%%" << std::endl;
-        break;
-        
-    case gnsdk_status_receiving:
-        std::cout <<"Receiving... " << percent_complete << "%%" << std::endl;
-        break;
-        
+
     case gnsdk_status_disconnected:
         std::cout <<"Disconnected" << std::endl;
         break;

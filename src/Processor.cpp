@@ -65,7 +65,7 @@ void Processor::process(const std::string &input, const std::string &output)
   AudioSource         audioSource(input);
   GnMusicIdStream     stream(*(_user.get()), kPresetRadio, &eventsHandler);
 
-  // stream.Options().ResultSingle(true);
+  stream.Options().ResultSingle(true);
   stream.AudioProcessStart(audioSource);
   stream.IdentifyAlbum();
 }

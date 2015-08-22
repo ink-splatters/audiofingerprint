@@ -1,6 +1,5 @@
 AudioFinterprint v1.0
 
-
 PREREQUISITES
   -gcc/clang (Xcode on Mac, devtools or analog on Linux)
   -cmake
@@ -26,7 +25,9 @@ BUILDING
 
 NOTES
 
-The software autodetects WAV format (channels, frequency, bps)
+-The software autodetects WAV format (channels, frequency, bps)
+-The software uses single result approach: stream.Options().ResultSingle(true); If you want more results, there should be false.
+ Please note that other results are not accurate
 
 FILE FORMATS
 

@@ -68,7 +68,7 @@ void StatusEventHandler::StatusEvent(GnStatus status, gnsdk_uint32_t percent_com
         break;
         
     case gnsdk_status_connecting:
-        std::cout <<"Connecting... " << std::endl;
+        std::cout <<"Busy... " << std::endl;
         break;
 
     case gnsdk_status_disconnected:

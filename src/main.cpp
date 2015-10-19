@@ -1,7 +1,7 @@
 #include "Processor.h"
 
 #include "gnsdk.hpp"
-
+#include "SimpleLogger.h"
 #include <iostream>
 #include <boost/program_options.hpp>
 
@@ -19,7 +19,7 @@ int main (int argc, char* argv[])
       ("help,h", "Show help")
       ("settings", po::value<std::string>(&settings)->required(), "Settings file name")
       ("input", po::value<std::string>(&input)->required(), "Fingerprint File")
-      ("output", po::value<std::string>(&output)->required(), "Output JSON file name")
+      ("output", po::value<std::string>(&output), "Output JSON file name. If missing, output will be to stdout")
     ;
 
     po::variables_map vm;
@@ -27,11 +27,13 @@ int main (int argc, char* argv[])
 
     if (vm.count("help") || argc == 1)
     {
-      std::cout << desc << std::endl;
+      SimpleLogger::instance() << desc << std::endl;
       return 0;
     }
 
     po::notify(vm);
+
+    SimpleLogger::instance().enable(!output.empty());
 
     AudioFingerprint::Processor processor (settings);
     
@@ -39,7 +41,7 @@ int main (int argc, char* argv[])
   }
   catch (gracenote::GnError& e)
   {
-    std::cout << "ERROR: " << e.ErrorAPI() << "\t" << std::hex << e.ErrorCode() << "\t" <<  e.ErrorDescription() << std::endl;
+    SimpleLogger::instance() << "ERROR: " << e.ErrorAPI() << "\t" << std::hex << e.ErrorCode() << "\t" <<  e.ErrorDescription() << std::endl;
     return 1;
   }
   catch (const std::exception & e)

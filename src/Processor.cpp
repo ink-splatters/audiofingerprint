@@ -1,6 +1,7 @@
 #include "Processor.h"
 #include "AudioSource.h"
 #include "StatusEventsHandler.h"
+#include "SimpleLogger.h"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -31,9 +32,8 @@ Processor::Processor(const std::string& settings)
 
   _manager = std::unique_ptr<GnManager>(new GnManager(licenseFile.c_str(), kLicenseInputModeFilename));
 
-  std::cout << std::endl << "GNSDK Product Version : " << _manager->ProductVersion() << " \t(built " << _manager->BuildDate() << ")" << std::endl;
-
-  std::cout << "Initializing..." << std::endl;
+  SimpleLogger::instance() <<  "GNSDK Product Version : " << _manager->ProductVersion() << " \t(built " << _manager->BuildDate() << ")" << std::endl;
+  SimpleLogger::instance() << "Initializing..." << std::endl;
 
   _log = std::unique_ptr<GnLog>(new GnLog(
     "AudioFingerPrint.log",
@@ -56,7 +56,7 @@ Processor::Processor(const std::string& settings)
   _locale->SetGroupDefault();
 
 
-  std::cout << "Done." << std::endl;
+  SimpleLogger::instance() << "Done." << std::endl;
 }
 
 void Processor::process(const std::string &input, const std::string &output)

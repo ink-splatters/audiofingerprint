@@ -1,4 +1,5 @@
 #include "StatusEventsHandler.h"
+#include "SimpleLogger.h"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -14,11 +15,11 @@ namespace
 
 ptree GetTrack(const std::string &artist, const std::string & album, const GnTrack & track )
 {
-  std::cout << "\t\tMatched track:" << std::endl;
-  std::cout << "\t\t\tnumber: " << track.TrackNumber() << std::endl;
-  std::cout << "\t\t\ttitle: " << track.Title().Display() << std::endl;
-  std::cout << "\t\t\tartist: " << artist << std::endl;
-  std::cout << "\t\t\ttrack length (ms): " << track.Duration() << std::endl;
+  SimpleLogger::instance() << "\t\tMatched track:" << std::endl;
+  SimpleLogger::instance() << "\t\t\tnumber: " << track.TrackNumber() << std::endl;
+  SimpleLogger::instance() << "\t\t\ttitle: " << track.Title().Display() << std::endl;
+  SimpleLogger::instance() << "\t\t\tartist: " << artist << std::endl;
+  SimpleLogger::instance() << "\t\t\ttrack length (ms): " << track.Duration() << std::endl;
 
   ptree ptTrack;
   ptTrack.put<std::string>("artist", artist);
@@ -31,14 +32,14 @@ ptree GetTrack(const std::string &artist, const std::string & album, const GnTra
 
 void OutputResult(const std::string &outputFile, const GnResponseAlbums& albums)
 {
-  std::cout<<"\tAlbum count: " << albums.Albums().count() << std::endl;
+  SimpleLogger::instance()<<"\tAlbum count: " << albums.Albums().count() << std::endl;
     
   int matchCounter = 0;
   ptree result, tracks;
     
   for (auto it = albums.Albums().begin(); it != albums.Albums().end(); ++it)
   {
-    std::cout << "\tMatch " << ++matchCounter << " - Album Title:\t" << it->Title().Display() << std::endl;
+    SimpleLogger::instance() << "\tMatch " << ++matchCounter << " - Album Title:\t" << it->Title().Display() << std::endl;
     auto track = GetTrack(it->Artist().Name().Display(), it->Title().Display(), it->TrackMatched());
     tracks.push_back(std::make_pair(std::string(), track));
   }
@@ -64,19 +65,19 @@ void StatusEventHandler::StatusEvent(GnStatus status, gnsdk_uint32_t percent_com
   switch (status)
   {
     case gnsdk_status_unknown:
-        std::cout <<"Unknown ";
+        SimpleLogger::instance() <<"Unknown ";
         break;
         
     case gnsdk_status_connecting:
-        std::cout <<"Busy... " << std::endl;
+        SimpleLogger::instance() <<"Busy... " << std::endl;
         break;
 
     case gnsdk_status_disconnected:
-        std::cout <<"Disconnected" << std::endl;
+        SimpleLogger::instance() <<"Disconnected" << std::endl;
         break;
         
     case gnsdk_status_complete:
-        std::cout <<"Complete" << std::endl;
+        SimpleLogger::instance() <<"Done" << std::endl;
         break;
         
     default:
@@ -94,7 +95,7 @@ void StatusEventHandler::StatusEventHandler::MusicIdStreamIdentifyingStatusEvent
 {
   if (status == kStatusIdentifyingEnded)
   {
-    std::cout << std::endl << "Identification complete" << std::endl;
+    SimpleLogger::instance() <<  "Identification complete" << std::endl;
     canceller.SetCancel(true);
   }
 }

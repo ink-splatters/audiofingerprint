@@ -1,7 +1,6 @@
 #include "AudioSource.h"
-
+#include "SimpleLogger.h"
 #include <iostream>
-// #include <endian.h>
 
 namespace AudioFingerprint
 {
@@ -44,7 +43,7 @@ AudioSource::AudioSource(const std::string &inputFile):
   _bitsPerSample(0),
   _channels(0)
 {
-  std::cout << "Input file: " << _inputFile << std::endl;
+  SimpleLogger::instance() << "Input file: " << _inputFile << std::endl;
 }
 
 gnsdk_uint32_t AudioSource::SourceInit()
@@ -65,9 +64,9 @@ gnsdk_uint32_t AudioSource::SourceInit()
     _channels = header.NumOfChan;
     
 
-    std::cout << "Sample Rate: " << _sampleRate << std::endl;
-    std::cout << "Bits per sample: " << _bitsPerSample << std::endl;
-    std::cout << "Channels: " << _channels << std::endl;
+    SimpleLogger::instance() << "Sample Rate: " << _sampleRate << std::endl;
+    SimpleLogger::instance() << "Bits per sample: " << _bitsPerSample << std::endl;
+    SimpleLogger::instance() << "Channels: " << _channels << std::endl;
 
     return 0;
   }

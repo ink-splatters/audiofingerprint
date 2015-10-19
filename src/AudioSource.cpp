@@ -43,7 +43,7 @@ AudioSource::AudioSource(const std::string &inputFile):
   _bitsPerSample(0),
   _channels(0)
 {
-  SimpleLogger::instance() << "Input file: " << _inputFile << std::endl;
+  SimpleLogger::instance() << "Input file: " << _inputFile << "\n";
 }
 
 gnsdk_uint32_t AudioSource::SourceInit()
@@ -64,9 +64,9 @@ gnsdk_uint32_t AudioSource::SourceInit()
     _channels = header.NumOfChan;
     
 
-    SimpleLogger::instance() << "Sample Rate: " << _sampleRate << std::endl;
-    SimpleLogger::instance() << "Bits per sample: " << _bitsPerSample << std::endl;
-    SimpleLogger::instance() << "Channels: " << _channels << std::endl;
+    SimpleLogger::instance() << "Sample Rate: " << _sampleRate << "\n";
+    SimpleLogger::instance() << "Bits per sample: " << _bitsPerSample << "\n";
+    SimpleLogger::instance() << "Channels: " << _channels << "\n";
 
     return 0;
   }

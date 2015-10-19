@@ -15,11 +15,11 @@ namespace
 
 ptree GetTrack(const std::string &artist, const std::string & album, const GnTrack & track )
 {
-  SimpleLogger::instance() << "\t\tMatched track:" << std::endl;
-  SimpleLogger::instance() << "\t\t\tnumber: " << track.TrackNumber() << std::endl;
-  SimpleLogger::instance() << "\t\t\ttitle: " << track.Title().Display() << std::endl;
-  SimpleLogger::instance() << "\t\t\tartist: " << artist << std::endl;
-  SimpleLogger::instance() << "\t\t\ttrack length (ms): " << track.Duration() << std::endl;
+  SimpleLogger::instance() << "\t\tMatched track:" << "\n";
+  SimpleLogger::instance() << "\t\t\tnumber: " << track.TrackNumber() << "\n";
+  SimpleLogger::instance() << "\t\t\ttitle: " << track.Title().Display() << "\n";
+  SimpleLogger::instance() << "\t\t\tartist: " << artist << "\n";
+  SimpleLogger::instance() << "\t\t\ttrack length (ms): " << track.Duration() << "\n";
 
   ptree ptTrack;
   ptTrack.put<std::string>("artist", artist);
@@ -32,22 +32,29 @@ ptree GetTrack(const std::string &artist, const std::string & album, const GnTra
 
 void OutputResult(const std::string &outputFile, const GnResponseAlbums& albums)
 {
-  SimpleLogger::instance()<<"\tAlbum count: " << albums.Albums().count() << std::endl;
+  SimpleLogger::instance()<<"\tAlbum count: " << albums.Albums().count() << "\n";
     
   int matchCounter = 0;
   ptree result, tracks;
     
   for (auto it = albums.Albums().begin(); it != albums.Albums().end(); ++it)
   {
-    SimpleLogger::instance() << "\tMatch " << ++matchCounter << " - Album Title:\t" << it->Title().Display() << std::endl;
+    SimpleLogger::instance() << "\tMatch " << ++matchCounter << " - Album Title:\t" << it->Title().Display() << "\n";
     auto track = GetTrack(it->Artist().Name().Display(), it->Title().Display(), it->TrackMatched());
     tracks.push_back(std::make_pair(std::string(), track));
   }
 
   result.add_child("tracks", tracks);
-
-  auto & out = outputFile.empty() ? std::cout : std::ofstream(outputFile);
-  boost::property_tree::write_json(out, result);
+  
+  if (outputFile.empty())
+  {
+    boost::property_tree::write_json(std::cout, result);
+  }
+  else
+  {
+    std::ofstream file(outputFile);
+    boost::property_tree::write_json(file, result);  
+  }
 }
 
 }
@@ -69,15 +76,15 @@ void StatusEventHandler::StatusEvent(GnStatus status, gnsdk_uint32_t percent_com
         break;
         
     case gnsdk_status_connecting:
-        SimpleLogger::instance() <<"Busy... " << std::endl;
+        SimpleLogger::instance() <<"Busy... " << "\n";
         break;
 
     case gnsdk_status_disconnected:
-        SimpleLogger::instance() <<"Disconnected" << std::endl;
+        SimpleLogger::instance() <<"Disconnected" << "\n";
         break;
         
     case gnsdk_status_complete:
-        SimpleLogger::instance() <<"Done" << std::endl;
+        SimpleLogger::instance() <<"Done" << "\n";
         break;
         
     default:
@@ -95,7 +102,7 @@ void StatusEventHandler::StatusEventHandler::MusicIdStreamIdentifyingStatusEvent
 {
   if (status == kStatusIdentifyingEnded)
   {
-    SimpleLogger::instance() <<  "Identification complete" << std::endl;
+    SimpleLogger::instance() <<  "Identification complete" << "\n";
     canceller.SetCancel(true);
   }
 }
@@ -107,7 +114,7 @@ void StatusEventHandler::MusicIdStreamAlbumResult(GnResponseAlbums& album_result
 
 void StatusEventHandler::MusicIdStreamIdentifyCompletedWithError(GnError& e)
 {
-  std::cerr << e.ErrorAPI() << "\t" << std::hex << e.ErrorCode() << "\t" <<  e.ErrorDescription() << std::endl;
+  std::cerr << e.ErrorAPI() << "\t" << std::hex << e.ErrorCode() << "\t" <<  e.ErrorDescription() << "\n";
 }
 
 }

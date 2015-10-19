@@ -32,8 +32,8 @@ Processor::Processor(const std::string& settings)
 
   _manager = std::unique_ptr<GnManager>(new GnManager(licenseFile.c_str(), kLicenseInputModeFilename));
 
-  SimpleLogger::instance() <<  "GNSDK Product Version : " << _manager->ProductVersion() << " \t(built " << _manager->BuildDate() << ")" << std::endl;
-  SimpleLogger::instance() << "Initializing..." << std::endl;
+  SimpleLogger::instance() <<  "GNSDK Product Version : " << _manager->ProductVersion() << " \t(built " << _manager->BuildDate() << ")" << "\n";
+  SimpleLogger::instance() << "Initializing..." << "\n";
 
   _log = std::unique_ptr<GnLog>(new GnLog(
     "AudioFingerPrint.log",
@@ -56,7 +56,7 @@ Processor::Processor(const std::string& settings)
   _locale->SetGroupDefault();
 
 
-  SimpleLogger::instance() << "Done." << std::endl;
+  SimpleLogger::instance() << "Done." << "\n";
 }
 
 void Processor::process(const std::string &input, const std::string &output)

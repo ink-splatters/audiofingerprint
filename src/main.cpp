@@ -27,7 +27,7 @@ int main (int argc, char* argv[])
 
     if (vm.count("help") || argc == 1)
     {
-      SimpleLogger::instance() << desc << std::endl;
+      SimpleLogger::instance() << desc << "\n";
       return 0;
     }
 
@@ -41,17 +41,17 @@ int main (int argc, char* argv[])
   }
   catch (gracenote::GnError& e)
   {
-    SimpleLogger::instance() << "ERROR: " << e.ErrorAPI() << "\t" << std::hex << e.ErrorCode() << "\t" <<  e.ErrorDescription() << std::endl;
+    SimpleLogger::instance() << "ERROR: " << e.ErrorAPI() << "\t" << std::hex << e.ErrorCode() << "\t" <<  e.ErrorDescription() << "\n";
     return 1;
   }
   catch (const std::exception & e)
   {
-    std::cerr << e.what() << std::endl;
+    std::cerr << e.what() << "\n";
     return 1;
   }
   catch (...)
   {
-    std::cerr << "Unknown exception!" << std::endl;   
+    std::cerr << "Unknown exception!" << "\n";   
     return 1;
   }
   

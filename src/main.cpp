@@ -35,7 +35,7 @@ int main (int argc, char* argv[])
 
     SimpleLogger::instance().enable(!output.empty());
 
-    AudioFingerprint::Processor processor (settings);
+    AudioFingerprint::Processor processor (settings, !output.empty());
     
     processor.process(input, output);      
   }

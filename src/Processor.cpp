@@ -15,7 +15,9 @@ const std::string APP_VERSION="1.0";
 namespace AudioFingerprint
 {
 
-Processor::Processor(const std::string& settings)
+using boost::property_tree::ptree;
+
+Processor::Processor(const std::string& settings, bool logToScreen)
 {
   using boost::property_tree::ptree;
   using namespace gracenote::storage_sqlite;
@@ -36,13 +38,13 @@ Processor::Processor(const std::string& settings)
   SimpleLogger::instance() << "Initializing..." << "\n";
 
   _log = std::unique_ptr<GnLog>(new GnLog(
-    "AudioFingerPrint.log",
-    GnLogFilters().Error().Warning(),
-    GnLogColumns().All(),
-    GnLogOptions().MaxSize(0).Archive(false),
-    GNSDK_NULL
-    )
-  );
+      "AudioFingerPrint.log",
+      GnLogFilters().Error().Warning(),
+      GnLogColumns().All(),
+      GnLogOptions().MaxSize(0).Archive(false),
+      logToScreen ? nullptr : this
+   ));
+
   
   _log->Enable(kLogPackageAllGNSDK);
 
@@ -57,6 +59,18 @@ Processor::Processor(const std::string& settings)
 
 
   SimpleLogger::instance() << "Done." << "\n";
+}
+
+bool Processor::LogMessage(gnsdk_uint16_t packageId, GnLogMessageType messageType, gnsdk_uint32_t errorCode, gnsdk_cstr_t message)
+{
+  ptree ptMessage, result;
+  ptMessage.put<uint32_t>("code", errorCode);
+  ptMessage.put<std::string>("message", std::string(message));
+
+  result.add_child((messageType == kLoggingMessageTypeError) ? "error" : "warning", ptMessage);
+  boost::property_tree::write_json(std::cout, result);
+
+  return true;
 }
 
 void Processor::process(const std::string &input, const std::string &output)

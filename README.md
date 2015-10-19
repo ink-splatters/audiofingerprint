@@ -19,9 +19,9 @@ BUILDING
 5. run ./build.sh 
 6. The program will build and will run with sample data (user id, user tag, license and input file Smells Like a Teen Spirit)
 7. Please run ./build/install/AudioFingerPrint --help for options
-
-8. To deploy the app outside of build machine please use install folder and ensure you have boost same version installed on your system
-
+8. To print to stdout, just disable --output parameter. KNOWN ISSUE: in case of error software tries to output
+the error message in json format as well. But it seems GNSDK logger has an issue and it works not very well.
+10. To deploy the app outside of build machine please use install folder and ensure you have boost same version installed on your system
 
 NOTES
 
@@ -32,4 +32,5 @@ NOTES
 FILE FORMATS
 
 1. Please see settings_af.json to see input settings format
-2. Please see build/install/output.json for output format 
+2. Please see build/install/output.json for output format in case --output is specified
+3. Please see stdout in case --output is not specified

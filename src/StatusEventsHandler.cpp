@@ -46,8 +46,8 @@ void OutputResult(const std::string &outputFile, const GnResponseAlbums& albums)
 
   result.add_child("tracks", tracks);
 
-  std::ofstream file(outputFile);  
-  boost::property_tree::write_json(file, result);
+  auto & out = outputFile.empty() ? std::cout : std::ofstream(outputFile);
+  boost::property_tree::write_json(out, result);
 }
 
 }

@@ -2,7 +2,6 @@
 
 string(REPLACE "\"" "" GRACENOTESDK_ROOT_WITHOUT_QUOTES $ENV{GRACENOTESDK_ROOT})
 
-
 find_path(GRACENOTESDK_INCLUDE_DIR NAMES gnsdk.h
   PATHS
     /usr/local/include
@@ -37,9 +36,12 @@ else()
   message (FATAL_ERROR "platform is not supported")
 endif()  
 
-string(REGEX MATCH "gnsdk-[0-9]+\\.[0-9]+.[0-9]+" GRACENOTESDK_VER ${GRACENOTESDK_ROOT_WITHOUT_QUOTES})
-string(REPLACE "gnsdk-" "" GRACENOTESDK_VER ${GRACENOTESDK_VER})
-       
+file (STRINGS ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/version GRACENOTESDK_VER)
+string(REGEX MATCH "[0-9]+\\.[0-9]+.[0-9]+" GRACENOTESDK_VER ${GRACENOTESDK_VER})
+
+message ("!!!lib dir ${GRACENOTESDK_LIB_DIR}")
+message ("!!! suffixes: ${PATH_SUFFIXES}")
+message ("!!! version: ${GRACENOTESDK_VER}")
 find_library(
     GRACENOTESDK_LIBRARY
     NAMES 

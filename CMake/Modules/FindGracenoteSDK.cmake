@@ -20,6 +20,8 @@ elseif (UNIX)
   if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
     set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/linux_x86-64)
     set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/linux_x86)
+    set (LIB_SUFFIX ".so")
+    set (LIB_PREFIX ".lib")
   else()
     set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/linux_x86-32)
     set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/linux_x86-32)
@@ -41,11 +43,11 @@ string(REGEX MATCH "[0-9]+\\.[0-9]+.[0-9]+" GRACENOTESDK_VER ${GRACENOTESDK_VER}
 
 message ("!!!lib dir ${GRACENOTESDK_LIB_DIR}")
 message ("!!! suffixes: ${PATH_SUFFIXES}")
-message ("!!! version: ${GRACENOTESDK_VER}")
+message ("!!! version: ${GRACENOTESDK_VER}b")
 find_library(
     GRACENOTESDK_LIBRARY
     NAMES 
-      gnsdk_manager.${GRACENOTESDK_VER}
+      libgnsdk_manager${LIB_SUFFIX}.${GRACENOTESDK_VER}
   PATHS
     /usr/local
     /usr/X11

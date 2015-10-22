@@ -47,7 +47,7 @@ message ("!!! version: ${GRACENOTESDK_VER}b")
 find_library(
     GRACENOTESDK_LIBRARY
     NAMES 
-      libgnsdk_manager${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_manager${LIB_SUFFIX}.${GRACENOTESDK_VER}
   PATHS
     /usr/local
     /usr/X11
@@ -61,19 +61,19 @@ find_library(
 )
 
 set (GRACENOTESDK_LIBRARIES 
-      gnsdk_manager.${GRACENOTESDK_VER}
-      gnsdk_link.${GRACENOTESDK_VER}
-      gnsdk_lookup_local.${GRACENOTESDK_VER}
-      gnsdk_lookup_localstream.${GRACENOTESDK_VER}
-      gnsdk_dsp.${GRACENOTESDK_VER}
-      gnsdk_manager.${GRACENOTESDK_VER}
-      gnsdk_moodgrid.${GRACENOTESDK_VER}
-      gnsdk_musicid.${GRACENOTESDK_VER}
-      gnsdk_musicid_file.${GRACENOTESDK_VER}
-      gnsdk_musicid_stream.${GRACENOTESDK_VER}
-      gnsdk_playlist.${GRACENOTESDK_VER}
-      gnsdk_storage_sqlite.${GRACENOTESDK_VER}
-      gnsdk_video.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_manager${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_link${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_lookup_local${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_lookup_localstream${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_dsp${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_manager${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_moodgrid${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_musicid${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_musicid_file${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_musicid_stream${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_playlist${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_storage_sqlite${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      ${LIB_PREFIX}gnsdk_video${LIB_SUFFIX}.${GRACENOTESDK_VER}
 )
 
 include(FindPackageHandleStandardArgs)

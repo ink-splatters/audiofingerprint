@@ -14,25 +14,19 @@ find_path(GRACENOTESDK_INCLUDE_DIR NAMES gnsdk.h
 message (${GRACENOTESDK_INCLUDE_DIR})
 
 if (APPLE)
+  set (LIB_SUFFIX ".dylib")
+  set (LIB_PREFIX "lib")
   set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/mac_x86-64)
   set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/mac_x86-64)
 elseif (UNIX)
+  set (LIB_SUFFIX ".so")
+  set (LIB_PREFIX "lib")
   if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
     set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/linux_x86-64)
-    set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/linux_x86)
-    set (LIB_SUFFIX ".so")
-    set (LIB_PREFIX "lib")
+    set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/linux_x86-64)
   else()
     set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/linux_x86-32)
     set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/linux_x86-32)
-  endif()
-elseif (WIN32)
-  if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-    set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/win_x86-64)
-    set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/win_x86-64)
-  else()
-    set (GRACENOTESDK_LIB_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/lib/win_x86-32)
-    set (GRACENOTESDK_PLATFORM_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/include/win_x86-32)
   endif()
 else()
   message (FATAL_ERROR "platform is not supported")
@@ -41,9 +35,6 @@ endif()
 file (STRINGS ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/version GRACENOTESDK_VER)
 string(REGEX MATCH "[0-9]+\\.[0-9]+.[0-9]+" GRACENOTESDK_VER ${GRACENOTESDK_VER})
 
-message ("!!!lib dir ${GRACENOTESDK_LIB_DIR}")
-message ("!!! suffixes: ${PATH_SUFFIXES}")
-message ("!!! version: ${GRACENOTESDK_VER}b")
 find_library(
     GRACENOTESDK_LIBRARY
     NAMES 
@@ -61,19 +52,19 @@ find_library(
 )
 
 set (GRACENOTESDK_LIBRARIES 
-      ${LIB_PREFIX}gnsdk_manager${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_link${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_lookup_local${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_lookup_localstream${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_dsp${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_manager${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_moodgrid${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_musicid${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_musicid_file${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_musicid_stream${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_playlist${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_storage_sqlite${LIB_SUFFIX}.${GRACENOTESDK_VER}
-      ${LIB_PREFIX}gnsdk_video${LIB_SUFFIX}.${GRACENOTESDK_VER}
+      -lgnsdk_manager
+      -lgnsdk_link
+      -lgnsdk_lookup_local
+      -lgnsdk_lookup_localstream
+      -lgnsdk_dsp
+      -lgnsdk_manager
+      -lgnsdk_moodgrid
+      -lgnsdk_musicid
+      -lgnsdk_musicid_file
+      -lgnsdk_musicid_stream
+      -lgnsdk_playlist
+      -lgnsdk_storage_sqlite
+      -lgnsdk_video
 )
 
 include(FindPackageHandleStandardArgs)

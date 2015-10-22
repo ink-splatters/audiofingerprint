@@ -3,7 +3,7 @@ AudioFinterprint v1.0
 PREREQUISITES
   -gcc/clang (Xcode on Mac, devtools or analog on Linux)
   -cmake
-  -boost 1.55+
+  -boost 1.55+ (on Ubuntu please install package libboost-all-dev)
   -gracenotesdk (GNSDK)
 
   for installing prerequisites on Mac please use brew

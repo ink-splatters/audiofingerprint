@@ -9,6 +9,11 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)  
 set(Boost_USE_STATIC_RUNTIME OFF) 
 
+#if (UNIX AND NOT APPLE )
+	set(BOOST_LIBRARYDIR "/usr/lib/x86_64-linux-gnu")
+#endif()
+
+message (boost library dir: ${BOOST_LIBRARYDIR})
 find_package( Boost 1.55 COMPONENTS system program_options REQUIRED )
 
 find_package(GracenoteSDK 3.07.7 REQUIRED)
@@ -35,6 +40,7 @@ include_directories (${CMAKE_SOURCE_DIR})
 include_directories (${GRACENOTESDK_INCLUDE_DIR})
 include_directories (${GRACENOTESDK_CPP_INCLUDE_DIR})
 include_directories (${GRACENOTESDK_PLATFORM_INCLUDE_DIR})
+
 link_directories(${GRACENOTESDK_LIB_DIR})
 
 add_executable(${PROJECT_NAME} ${SRC} ${WRAPPER_SRC})

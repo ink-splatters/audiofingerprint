@@ -1,3 +1,4 @@
+#!/bin/bash
 rm -rf build
 mkdir build
 
@@ -8,5 +9,6 @@ cp -rf ../settings_af.json  install/
 cp -rf ../license.lic install/
 cp -rf ../teen_spirit_14s.wav install/
 cd install
+
 ./AudioFingerPrint --settings=settings_af.json --input=teen_spirit_14s.wav --output=output.json
 cd ../..

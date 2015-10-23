@@ -17,7 +17,8 @@ BUILDING
 3. install cmake
 4. install boost development package (on mac os x just 'brew install boost',
    on Ubuntu please install package libboost-all-dev)
-5. run sudo ./install_gnsdk_libs.sh to make symlinks for GNSDK libs and install them  toldconfig aware folder (on Linux)
+5. run ./install_gnsdk_libs.sh to make symlinks for GNSDK libs. 
+FOR LINUX: The step installs libs to ldconfig aware folder - /usr/local/lib (on Linux). Please be ready to enter admin password during installation. DON'T RUN WHOLE COMMAND AS SUDO
 6. run ./build.sh 
 7. The program will build and will run with sample data (user id, user tag, license and input file Smells Like a Teen Spirit)
 8. Please run ./build/install/AudioFingerPrint --help for options

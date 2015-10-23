@@ -21,13 +21,13 @@ if [ "$arch" == "x86_64" ]; then
     path=$GRACENOTESDK_ROOT/lib/$sysName\_x86-32
 fi
 
-if [ "$sysName" == "mac" ]; then
-  for file in $path/*.*; do
-    echo "Making symlink for $file"
+echo "Path: $path"
+
+for file in $path/*.*; do
+  echo "Making symlink for $file"
     symlink=${file/\.$version/""}
     ln -s $file $symlink
-  done
-fi
+done
 
 echo Done
 

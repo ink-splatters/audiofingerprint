@@ -34,7 +34,12 @@ echo Done
 
 if [ "$sysName" == "linux" ]; then
   echo "Copying libs to /usr/local/"
-  sudo cp -R /usr/local/lib
+  for file in *.*; do
+    echo "Copying $file"
+    sudo cp $file /usr/local/lib/
+  done
+  sudo ldconfig
+  
 fi
 
 

@@ -45,7 +45,6 @@ link_directories(${GRACENOTESDK_LIB_DIR})
 
 add_executable(${PROJECT_NAME} ${SRC} ${WRAPPER_SRC})
 
-message ("!!! lib: ${GRACENOTESDK_LIBRARIES}")
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${GRACENOTESDK_LIBRARIES} )
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
 

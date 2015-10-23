@@ -50,6 +50,8 @@ target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
 
 # Install 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}) 
+if (APPLE)
 install(CODE "
     execute_process(COMMAND ${CMAKE_COMMAND} -DGRACENOTESDK_LIB_DIR=${GRACENOTESDK_LIB_DIR} -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -P ${CMAKE_SOURCE_DIR}/install.cmake)
 ")
+endif()

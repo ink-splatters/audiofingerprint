@@ -1,4 +1,4 @@
-AudioFinterprint v1.0
+AudioFinterprint v1.1
 
 PREREQUISITES
   -gcc/clang (Xcode on Mac, devtools or analog on Linux)

@@ -3,7 +3,7 @@ AudioFinterprint v1.0
 PREREQUISITES
   -gcc/clang (Xcode on Mac, devtools or analog on Linux)
   -cmake
-  -boost 1.55+ (on Ubuntu please install package libboost-all-dev)
+  -boost 1.55+ 
   -gracenotesdk (GNSDK)
 
   for installing prerequisites on Mac please use brew
@@ -15,11 +15,13 @@ BUILDING
    Please see settings_af.json for an example
 2. set GRACENOTESDK_ROOT ENV variable
 3. install cmake
-4. install boost development package (on mac os x just 'brew install boost')
-5. run ./build.sh 
-6. The program will build and will run with sample data (user id, user tag, license and input file Smells Like a Teen Spirit)
-7. Please run ./build/install/AudioFingerPrint --help for options
-8. To print to stdout, just disable --output parameter. KNOWN ISSUE: in case of error software tries to output
+4. install boost development package (on mac os x just 'brew install boost',
+   on Ubuntu please install package libboost-all-dev)
+5. run sudo ./install_gnsdk_libs.sh to make symlinks for GNSDK libs and install them  toldconfig aware folder (on Linux)
+6. run ./build.sh 
+7. The program will build and will run with sample data (user id, user tag, license and input file Smells Like a Teen Spirit)
+8. Please run ./build/install/AudioFingerPrint --help for options
+9. To print to stdout, just disable --output parameter. KNOWN ISSUE: in case of error software tries to output
 the error message in json format as well. But it seems GNSDK logger has an issue and it works not very well.
 10. To deploy the app outside of build machine please use install folder and ensure you have boost same version installed on your system
 

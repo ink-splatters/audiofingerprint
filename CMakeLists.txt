@@ -18,7 +18,7 @@ find_package( Boost 1.55 COMPONENTS system program_options REQUIRED )
 
 find_package(GracenoteSDK 3.07.7 REQUIRED)
 
-set (GRACENOTESDK_CPP_INCLUDE_DIR ${GRACENOTESDK_ROOT_WITHOUT_QUOTES}/wrappers/gnsdk_cplusplus/src_wrapper)
+set (GRACENOTESDK_CPP_INCLUDE_DIR ${GRACENOTESDK_ROOT}/wrappers/gnsdk_cplusplus/src_wrapper)
 
 add_definitions(-DGNSDK_MUSICID=1)
 add_definitions(-DGNSDK_MUSICID_STREAM=1)

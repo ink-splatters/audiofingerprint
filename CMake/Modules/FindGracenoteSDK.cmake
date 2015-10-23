@@ -33,12 +33,12 @@ else()
 endif()  
 
 file (STRINGS ${GRACENOTESDK_ROOT}/version GRACENOTESDK_VER)
-string(REGEX MATCH ".\[0-9]+\\.[0-9]+.[0-9]+" GRACENOTESDK_VER ${GRACENOTESDK_VER})
+#string(REGEX MATCH ".\[0-9]+\\.[0-9]+.[0-9]+" GRACENOTESDK_VER ${GRACENOTESDK_VER})
 
 find_library(
     GRACENOTESDK_LIBRARY
     NAMES 
-      gnsdk_manager.${GRACENOTESDK_VER}
+      gnsdk_manager
   PATHS
     /usr/local
     /usr/X11
@@ -52,19 +52,19 @@ find_library(
 )
 
 set (GRACENOTESDK_LIBRARIES 
-      -lgnsdk_manager
-      -lgnsdk_link
-      -lgnsdk_lookup_local
-      -lgnsdk_lookup_localstream
-      -lgnsdk_dsp
-      -lgnsdk_manager
-      -lgnsdk_moodgrid
-      -lgnsdk_musicid
-      -lgnsdk_musicid_file
-      -lgnsdk_musicid_stream
-      -lgnsdk_playlist
-      -lgnsdk_storage_sqlite
-      -lgnsdk_video
+      gnsdk_manager
+      gnsdk_link
+      gnsdk_lookup_local
+      gnsdk_lookup_localstream
+      gnsdk_dsp
+      gnsdk_manager
+      gnsdk_moodgrid
+      gnsdk_musicid
+      gnsdk_musicid_file
+      gnsdk_musicid_stream
+      gnsdk_playlist
+      gnsdk_storage_sqlite
+      gnsdk_video
 )
 
 include(FindPackageHandleStandardArgs)

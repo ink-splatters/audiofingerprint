@@ -22,12 +22,19 @@ if [ "$arch" == "x86_64" ]; then
 fi
 
 echo "Path: $path"
-
-for file in $path/*.*; do
+curdir=`pwd`
+cd $path/
+for file in *.*; do
   echo "Making symlink for $file"
     symlink=${file/\.$version/""}
     ln -s $file $symlink
 done
 
 echo Done
+
+if [ "$sysName" == "linux" ]; then
+  echo "Copying libs to /usr/local/"
+  sudo cp -R /usr/local/lib
+fi
+
 

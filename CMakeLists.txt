@@ -9,9 +9,9 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
-#if (UNIX AND NOT APPLE )
+if (UNIX AND NOT APPLE )
 	set(BOOST_LIBRARYDIR "/usr/lib/x86_64-linux-gnu")
-#endif()
+endif()
 
 message (boost library dir: ${BOOST_LIBRARYDIR})
 find_package( Boost 1.55 COMPONENTS system program_options REQUIRED )
@@ -49,7 +49,7 @@ target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${GRACENOTESDK_LIBRARIE
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
 
 # Install
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}) 
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
 if (APPLE)
 install(CODE "
     execute_process(COMMAND ${CMAKE_COMMAND} -DGRACENOTESDK_LIB_DIR=${GRACENOTESDK_LIB_DIR} -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -P ${CMAKE_SOURCE_DIR}/install.cmake)

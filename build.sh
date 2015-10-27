@@ -3,7 +3,7 @@ rm -rf build
 mkdir build
 
 cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=install
+cmake .. -DCMAKE_INSTALL_PREFIX=install -DMYARCH=linux_arm32
 make -j4 && make install
 cp -rf ../settings_af.json  install/
 cp -rf ../license.lic install/

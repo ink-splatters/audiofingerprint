@@ -1,5 +1,8 @@
 #
-
+if [ -n "$1" ]; then
+ echo "Overriding lib folder name: $1"
+ libFolderName=$1
+fi
 sysName=`uname`
 arch=`uname -m`
 version=`cat $GRACENOTESDK_ROOT/version`
@@ -15,11 +18,15 @@ else
   echo "You are on Linux $arch"
 fi
 
-if [ "$arch" == "x86_64" ]; then
-    path=$GRACENOTESDK_ROOT/lib/$sysName\_x86-64
-  else
-    path=$GRACENOTESDK_ROOT/lib/$sysName\_x86-32
+if [ -z "$libFolderName" ]; then
+    if [ "$arch" == "x86_64" ]; then
+        libFolderName=$sysName\_x86-64
+    else
+        libFolderName=$sysName\_x86-32
+    fi
 fi
+
+path=$GRACENOTESDK_ROOT/lib/$libFolderName
 
 echo "Path: $path"
 curdir=`pwd`

@@ -16,7 +16,7 @@ public:
       }
       return *this;
   }
-  
+
 private:
   SimpleLogger();
   bool _isEnabled;

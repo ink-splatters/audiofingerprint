@@ -62,7 +62,6 @@ gnsdk_uint32_t AudioSource::SourceInit()
     _sampleRate = header.SamplesPerSec;
     _bitsPerSample = header.bitsPerSample;
     _channels = header.NumOfChan;
-    
 
     SimpleLogger::instance() << "Sample Rate: " << _sampleRate << "\n";
     SimpleLogger::instance() << "Bits per sample: " << _bitsPerSample << "\n";

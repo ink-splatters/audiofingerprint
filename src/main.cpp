@@ -10,7 +10,7 @@ int main (int argc, char* argv[])
   namespace po = boost::program_options;
 
   po::options_description desc("General options");
-  
+
   try
   {
     std::string settings, input, output;
@@ -36,8 +36,8 @@ int main (int argc, char* argv[])
     SimpleLogger::instance().enable(!output.empty());
 
     AudioFingerprint::Processor processor (settings, !output.empty());
-    
-    processor.process(input, output);      
+
+    processor.process(input, output);
   }
   catch (gracenote::GnError& e)
   {
@@ -51,10 +51,9 @@ int main (int argc, char* argv[])
   }
   catch (...)
   {
-    std::cerr << "Unknown exception!" << "\n";   
+    std::cerr << "Unknown exception!" << "\n";
     return 1;
   }
-  
 
   return 0;
 }

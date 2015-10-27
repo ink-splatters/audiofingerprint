@@ -33,10 +33,10 @@ ptree GetTrack(const std::string &artist, const std::string & album, const GnTra
 void OutputResult(const std::string &outputFile, const GnResponseAlbums& albums)
 {
   SimpleLogger::instance()<<"\tAlbum count: " << albums.Albums().count() << "\n";
-    
+
   int matchCounter = 0;
   ptree result, tracks;
-    
+
   for (auto it = albums.Albums().begin(); it != albums.Albums().end(); ++it)
   {
     SimpleLogger::instance() << "\tMatch " << ++matchCounter << " - Album Title:\t" << it->Title().Display() << "\n";
@@ -45,7 +45,7 @@ void OutputResult(const std::string &outputFile, const GnResponseAlbums& albums)
   }
 
   result.add_child("tracks", tracks);
-  
+
   if (outputFile.empty())
   {
     boost::property_tree::write_json(std::cout, result);

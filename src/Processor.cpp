@@ -25,7 +25,7 @@ Processor::Processor(const std::string& settings, bool logToScreen)
 
   ptree pt ;
   std::ifstream file(settings);
-  
+
   boost::property_tree::read_json(file, pt);
 
   const auto & clientID = pt.get<std::string>("ClientID");
@@ -45,7 +45,7 @@ Processor::Processor(const std::string& settings, bool logToScreen)
       logToScreen ? nullptr : this
    ));
 
-  
+
   _log->Enable(kLogPackageAllGNSDK);
 
   GnStorageSqlite::Enable();

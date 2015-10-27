@@ -5,9 +5,9 @@ project (AudioFingerPrint)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake/Modules)
 SET(CMAKE_CXX_FLAGS "-std=c++0x")
 
-set(Boost_USE_STATIC_LIBS OFF) 
-set(Boost_USE_MULTITHREADED ON)  
-set(Boost_USE_STATIC_RUNTIME OFF) 
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
 
 #if (UNIX AND NOT APPLE )
 	set(BOOST_LIBRARYDIR "/usr/lib/x86_64-linux-gnu")
@@ -48,7 +48,7 @@ add_executable(${PROJECT_NAME} ${SRC} ${WRAPPER_SRC})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${GRACENOTESDK_LIBRARIES} )
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
 
-# Install 
+# Install
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}) 
 if (APPLE)
 install(CODE "

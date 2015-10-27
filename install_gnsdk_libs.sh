@@ -3,8 +3,8 @@
 sysName=`uname`
 arch=`uname -m`
 version=`cat $GRACENOTESDK_ROOT/version`
-a=( ${version//./ } ) 
-version="${a[0]}.${a[1]}.${a[2]}" 
+a=( ${version//./ } )
+version="${a[0]}.${a[1]}.${a[2]}"
 
 
 if [ "$sysName" == "Darwin" ]; then
@@ -39,7 +39,7 @@ if [ "$sysName" == "linux" ]; then
     sudo cp $file /usr/local/lib/
   done
   sudo ldconfig
-  
+
 fi
 
 

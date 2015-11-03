@@ -13,7 +13,6 @@ if (UNIX AND NOT APPLE )
 	set(BOOST_LIBRARYDIR "/usr/lib/x86_64-linux-gnu")
 endif()
 
-message (boost library dir: ${BOOST_LIBRARYDIR})
 find_package( Boost 1.55 COMPONENTS system program_options REQUIRED )
 
 find_package(GracenoteSDK 3.07.7 REQUIRED)
